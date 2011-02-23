@@ -1,13 +1,13 @@
 = s3-static-site
 
-*Homepage*:        http://s3-static-site.github.com <br/>
-*Git:*             http://github.com/voxxit/s3-static-site <br/>
-*Author*:          Joshua Delsman <br/>
-*Contributors*:    See Contributors section below <br/>
-*Copyright*:       2011 (c) Joshua Delsman <br/>
-*License*:         MIT License <br/>
-*Latest Version*:  0.1.0 <br/>
-*Release Date*:    February 22, 2011
+* *Homepage*:        http://s3-static-site.github.com
+* *Git:*             http://github.com/voxxit/s3-static-site
+* *Author*:          Joshua Delsman
+* *Contributors*:    See Contributors section below
+* *Copyright*:       2011 (c) Joshua Delsman
+* *License*:         MIT License
+* *Latest Version*:  0.1.0
+* *Release Date*:    February 22, 2011
 
 == Setup
 
