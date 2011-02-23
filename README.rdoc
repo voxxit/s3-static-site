@@ -1,13 +1,6 @@
 = s3-static-site
 
-* *Homepage*:        http://s3-static-site.github.com
-* *Git:*             http://github.com/voxxit/s3-static-site
-* *Author*:          Joshua Delsman
-* *Contributors*:    See Contributors section below
-* *Copyright*:       2011 (c) Joshua Delsman
-* *License*:         MIT License
-* *Latest Version*:  0.1.0
-* *Release Date*:    February 22, 2011
+Allows users to deploy static websites to Amazon S3 using Capistrano.
 
 == Setup
 
@@ -16,3 +9,7 @@ In order to get started, you need to install the following gem:
   gem install s3-static-site
   
 This will install the gem, along with the dependencies: Capistrano 2+ and AWS::S3.
+
+== Copyright 
+
+Copyright (c) 2011 Josh Delsman. See LICENSE.txt for details.
