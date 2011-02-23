@@ -1,7 +1,6 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    RedCloth (4.2.7)
     aws-s3 (0.6.2)
       builder
       mime-types
@@ -14,6 +13,7 @@ GEM
       net-ssh (>= 2.0.14)
       net-ssh-gateway (>= 1.0.0)
     git (1.2.5)
+    haml (3.0.25)
     highline (1.6.1)
     jeweler (1.5.2)
       bundler (~> 1.0.0)
@@ -31,17 +31,15 @@ GEM
     rcov (0.9.9)
     shoulda (2.11.3)
     xml-simple (1.0.14)
-    yard (0.6.4)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  RedCloth
   aws-s3
   bundler (~> 1.0.0)
   capistrano
+  haml
   jeweler (~> 1.5.2)
   rcov
   shoulda
-  yard

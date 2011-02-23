@@ -10,6 +10,56 @@ In order to get started, you need to install the following gem:
   
 This will install the gem, along with the dependencies: Capistrano 2+ and AWS::S3.
 
+== Creating a website
+
+To start a static website, just create a folder somewhere on your hard drive:
+
+  mkdir -p ~/www.tastyrails.com
+  
+Once you do that, you'll need to generate deployment scripts
+
+  cd ~/www.tastyrails.com
+  capify .
+  cat /dev/null > config/deploy.rb
+
+== Configure your deployment
+
+s3-static-site overrides the default Capistrano recipes for Rails projects with its own scripts. Here's a sample deployment script to get you started:
+
+  require 's3-static-site'
+
+  set :bucket, "www.tastyrails.com"
+  set :access_key_id, "access-key-id"
+  set :secret_access_key, "secret-access-key"
+
+Replace the +access_key_id+ and +secret_access_key+ from the values found in the AWS Management Console. 
+
+== Create your bucket
+
+If you haven't already created a bucket for use with Amazon S3 static website hosting, you'll need to do this before deployment. Instructions can be found here:
+
+http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?HostingWebsiteQS1.html
+
+== Deploying
+
+After setting up your +config/deploy.rb+ file and creating the bucket with Amazon, you can deploy using the following command:
+
+  cap deploy
+
+== Rendering with HAML or SASS
+
+s3-static-site allows you to either upload files to S3 as you'd statically find them on your hard drive, or you can use HAML or SASS to generate HTML using Ruby.
+
+For HAML generation, append +.haml+ to the end of your file, like:
+
+  index.html.haml
+  
+For SASS:
+
+  stylesheet.css.sass
+  
+When uploaded to S3, the +.haml+ and +.sass+ will be removed, leaving either +index.html+ or +stylesheet.css+.
+
 == Copyright 
 
 Copyright (c) 2011 Josh Delsman. See LICENSE.txt for details.

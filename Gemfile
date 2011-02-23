@@ -2,6 +2,7 @@ source "http://rubygems.org"
 
 gem "aws-s3"
 gem "capistrano"
+gem "haml"
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
