@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'bundler'
+
 begin
   Bundler.setup(:default, :development)
 rescue Bundler::BundlerError => e
@@ -7,23 +8,20 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'rake'
 
+require 'rake'
 require 'jeweler'
+
 Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "s3-static-site"
-  gem.homepage = "http://github.com/voxxit/s3-static-site"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "jdelsman@voxxit.com"
-  gem.authors = ["Josh Delsman"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.name        = "s3-static-site"
+  gem.homepage    = "http://github.com/voxxit/s3-static-site"
+  gem.license     = "MIT"
+  gem.summary     = %Q{Using Ruby and Capistrano, build and deploy a static website to Amazon S3}
+  gem.description = %Q{Using Ruby and Capistrano, build and deploy a static website to Amazon S3}
+  gem.email       = "jdelsman@voxxit.com"
+  gem.authors     = ["Josh Delsman"]
 end
+
 Jeweler::RubygemsDotOrgTasks.new
 
 require 'rake/testtask'
@@ -41,13 +39,3 @@ Rcov::RcovTask.new do |test|
 end
 
 task :default => :test
-
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "s3-static-site #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
-end
