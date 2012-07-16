@@ -1,6 +1,8 @@
 require 'haml'
 require 'aws/s3'
 
+MAX_RETRY_COUNT = 3
+
 unless Capistrano::Configuration.respond_to?(:instance)
   abort "s3-static-site requires Capistrano >= 2."
 end
@@ -65,7 +67,19 @@ Capistrano::Configuration.instance(true).load do
               open(file)
             end
 
-            AWS::S3::S3Object.store(path, contents, bucket, :access => :public_read)
+            success = false
+            MAX_RETRY_COUNT.times do
+              if AWS::S3::S3Object.store(path, contents, bucket, :access => :public_read) && AWS::S3::S3Object.exists?(path, bucket)
+                success = true
+                break
+              end
+            end
+            unless success
+              puts "*****************WARNING****************" 
+              puts "Upload to s3 failed!"
+              puts "*****************WARNING****************" 
+            end
+
           end
         end
       end
