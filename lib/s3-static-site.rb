@@ -69,7 +69,7 @@ Capistrano::Configuration.instance(true).load do
 
             success = false
             MAX_RETRY_COUNT.times do
-              if AWS::S3::S3Object.store(path, contents, bucket, :access => :public_read)
+              if AWS::S3::S3Object.store(path, contents, bucket, :access => :public_read) && AWS::S3::S3Object.exists?(path, bucket)
                 success = true
                 break
               end
