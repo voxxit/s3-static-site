@@ -16,11 +16,18 @@ To start a static website, just create a folder somewhere on your hard drive:
 
   mkdir -p ~/www.tastyrails.com
   
-Once you do that, you'll need to generate deployment scripts
+Once you do that, you'll need to generate deployment scripts:
 
   cd ~/www.tastyrails.com
   capify .
   cat /dev/null > config/deploy.rb
+
+Add all of your files you want deployed to S3 to the +public/+ folder:
+
+  mkdir -p public/
+  touch public/index.html
+  touch public/error.html
+  cat "This is a page which will be uploaded!" > public/index.html
 
 == Configure your deployment
 
