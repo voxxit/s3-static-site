@@ -10,7 +10,7 @@ Capistrano::Configuration.instance(true).load do
     set(name, *args, &block) if !exists?(name)
   end
   
-  _cset :deployment_path, `pwd`.gsub("\n", "") + "/public/"
+  _cset :deployment_path, `pwd`.gsub("\n", "") + "/public"
   
   def base_file_path(file)
     file.gsub(deployment_path, "")
@@ -22,7 +22,10 @@ Capistrano::Configuration.instance(true).load do
   
   # Establishes the connection to Amazon S3
   def establish_connection!
-    @s3 = AWS::S3.new(
+    # Send logging to STDOUT
+    AWS.config(:logger => Logger.new(STDOUT))
+
+    AWS::S3.new(
       :access_key_id => access_key_id,
       :secret_access_key => secret_access_key
     )
@@ -33,22 +36,18 @@ Capistrano::Configuration.instance(true).load do
     namespace :s3 do      
       desc "Empties bucket of all files. Caution when using this command, as it cannot be undone!"
       task :empty do
-        establish_connection!
-        
-        puts "Emptying bucket..."
-
-        @s3.buckets[bucket].clear!
+        _s3 = establish_connection!
+        _s3.buckets[bucket].clear!
       end
 
       desc "Upload files to the bucket in the current state"
       task :upload_files do
-        establish_connection!
+        _s3 = establish_connection!
 
         files.each do |file|
           if !File.directory?(file)
             path = base_file_path(file)
-
-            puts "Uploading #{path}..."
+            path.gsub!(/^\//, "") # Remove preceding slash for S3
 
             contents = case File.extname(path)
             when ".haml"
@@ -65,14 +64,13 @@ Capistrano::Configuration.instance(true).load do
               open(file)
             end
 
-            @s3.buckets[bucket].objects[path].write(contents, :acl => :public_read)
+            _s3.buckets[bucket].objects[path].write(contents, :acl => :public_read)
           end
         end
       end
     end
     
     task :update do
-      s3.empty
       s3.upload_files
     end
 

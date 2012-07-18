@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.version       = "0.2.0"
 
   # Gem dependencies
-  gem.add_runtime_dependency("aws-s3")
-  gem.add_runtime_dependency("capistrano")
-  gem.add_runtime_dependency("haml")
+  gem.add_dependency("aws-sdk")
+  gem.add_dependency("capistrano")
+  gem.add_dependency("haml")
 end
