@@ -69,4 +69,4 @@ When uploaded to S3, the +.haml+ and +.sass+ will be removed, leaving either +in
 
 == Copyright 
 
-Copyright (c) 2011 Josh Delsman. See LICENSE.txt for details.
+Copyright (c) 2012 Josh Delsman & miomoba, Inc. See LICENSE.txt for details.
