@@ -22,8 +22,8 @@ Capistrano::Configuration.instance(true).load do
   
   # Establishes the connection to Amazon S3
   def establish_connection!
-    AWS::S3::Base.establish_connection!(
-      :access_key_id     => access_key_id,
+    @s3 = AWS::S3.new(
+      :access_key_id => access_key_id,
       :secret_access_key => secret_access_key
     )
   end
@@ -37,7 +37,7 @@ Capistrano::Configuration.instance(true).load do
         
         puts "Emptying bucket..."
 
-        AWS::S3::Bucket.find(bucket).delete_all
+        @s3.buckets[bucket].clear!
       end
 
       desc "Upload files to the bucket in the current state"
@@ -65,7 +65,7 @@ Capistrano::Configuration.instance(true).load do
               open(file)
             end
 
-            AWS::S3::S3Object.store(path, contents, bucket, :access => :public_read)
+            @s3.buckets[bucket].objects[path].write(contents, :acl => :public_read)
           end
         end
       end
