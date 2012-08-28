@@ -11,7 +11,7 @@ Capistrano::Configuration.instance(true).load do
     set(name, *args, &block) if !exists?(name)
   end
   
-  _cset :deployment_path, `pwd`.gsub("\n", "") + "/public"
+  _cset :deployment_path, Dir.pwd.gsub("\n", "") + "/public"
   
   def base_file_path(file)
     file.gsub(deployment_path, "")
