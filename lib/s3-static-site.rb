@@ -1,5 +1,6 @@
 require 'haml'
 require 'aws/s3'
+require 'mime/types'
 
 unless Capistrano::Configuration.respond_to?(:instance)
   abort "s3-static-site requires Capistrano >= 2."
@@ -64,7 +65,18 @@ Capistrano::Configuration.instance(true).load do
               open(file)
             end
 
-            _s3.buckets[bucket].objects[path].write(contents, :acl => :public_read)
+            types = MIME::Types.type_for(File.basename(file))
+            if types.empty?
+              options = {
+                :acl => :public_read
+              }
+            else
+              options = {
+                :acl => :public_read,
+                :content_type => types[0]
+              }
+            end
+            _s3.buckets[bucket].objects[path].write(contents, options)
           end
         end
       end
