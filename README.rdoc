@@ -41,6 +41,16 @@ s3-static-site overrides the default Capistrano recipes for Rails projects with 
 
 Replace the +access_key_id+ and +secret_access_key+ from the values found in the AWS Management Console. 
 
+=== S3 write options
+
+s3-static-site sets files +:content_type+ and +:acl+ to +:public_read+, add or override with :
+
+  set :bucket_write_options, {
+    cache_control: "max-age=94608000, public"
+  }
+
+See aws-sdk S3Object.write:http://rubydoc.info/github/amazonwebservices/aws-sdk-for-ruby/master/AWS/S3/S3Object#write-instance_method documentation for all available options.
+
 == Create your bucket
 
 If you haven't already created a bucket for use with Amazon S3 static website hosting, you'll need to do this before deployment. Instructions can be found here:
