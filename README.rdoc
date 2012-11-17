@@ -1,47 +1,43 @@
 = s3-static-site
 
-Allows users to deploy static websites to Amazon S3 using Capistrano.
+Allows static websites deployment to Amazon S3 website buckets using Capistrano.
 
-== Setup
+== Hosting your website with Amazon S3
 
-In order to get started, you need to install the following gem:
+S3 provides special website enabled buckets that allows you to deliver website pages directly from S3.
+The most important difference is that theses buckets serves an index document (ex. index.html) whenever a user specifies the URL for the root of your website, or a subfolder. And you can point your domain name directly to the S3 bucket cname.
 
-  gem install s3-static-site
-  
-This will install the gem, along with the dependencies: Capistrano 2+ and AWS::S3.
+To learn how to setup your website bucket, see Amazon Documentation.
 
-== Creating a website
+http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?HostingWebsiteQS1.html
 
-To start a static website, just create a folder somewhere on your hard drive:
+== Getting started
 
-  mkdir -p ~/www.tastyrails.com
-  
-Once you do that, you'll need to generate deployment scripts:
+Setup capistrano, create a public folder and set your S3 bucket configurations in +deploy.rb+.
 
-  cd ~/www.tastyrails.com
   capify .
-  cat /dev/null > config/deploy.rb
+  mkdir public
+  touch config/deploy.rb #see config instructions bellow
+  cap deploy
 
-Add all of your files you want deployed to S3 to the +public/+ folder:
+And voilà!
 
-  mkdir -p public/
-  touch public/index.html
-  touch public/error.html
-  cat "This is a page which will be uploaded!" > public/index.html
+=== Configuring deployment
 
-== Configure your deployment
+s3-static-site overrides the default Capistrano recipes for Rails projects with its own simple s3 publishing scripts.
 
-s3-static-site overrides the default Capistrano recipes for Rails projects with its own scripts. Here's a sample deployment script to get you started:
-
+  # config/deploy.rb
   require 's3-static-site'
 
-  set :bucket, "www.tastyrails.com"
-  set :access_key_id, "access-key-id"
-  set :secret_access_key, "secret-access-key"
+  set :bucket, "www.cool-website-bucket.com"
+  set :access_key_id, "CHANGETHIS"
+  set :secret_access_key, "CHANGETHIS"
 
-Replace the +access_key_id+ and +secret_access_key+ from the values found in the AWS Management Console. 
+If you want to deploy to multiple buckets, have a look at Capistrano
+multistage:https://github.com/capistrano/capistrano/wiki/2.x-Multistage-Extension 
+and simply configure a bucket per stage.
 
-=== S3 write options
+==== S3 write options
 
 s3-static-site sets files +:content_type+ and +:acl+ to +:public_read+, add or override with :
 
@@ -50,18 +46,6 @@ s3-static-site sets files +:content_type+ and +:acl+ to +:public_read+, add or o
   }
 
 See aws-sdk S3Object.write:http://rubydoc.info/github/amazonwebservices/aws-sdk-for-ruby/master/AWS/S3/S3Object#write-instance_method documentation for all available options.
-
-== Create your bucket
-
-If you haven't already created a bucket for use with Amazon S3 static website hosting, you'll need to do this before deployment. Instructions can be found here:
-
-http://docs.amazonwebservices.com/AmazonS3/latest/dev/index.html?HostingWebsiteQS1.html
-
-== Deploying
-
-After setting up your +config/deploy.rb+ file and creating the bucket with Amazon, you can deploy using the following command:
-
-  cap deploy
 
 == Rendering with HAML or SASS
 
