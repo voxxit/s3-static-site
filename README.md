@@ -1,6 +1,6 @@
 # s3-static-site
 
-Allows static websites deployment to Amazon S3 website buckets using Capistrano.
+> Allows static websites deployment to Amazon S3 website buckets using Capistrano.
 
 ## Hosting your website with Amazon S3
 
