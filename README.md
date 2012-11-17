@@ -13,10 +13,10 @@ To learn how to setup your website bucket, see [Amazon Documentation](http://doc
 
 Setup capistrano, create a public folder and set your S3 bucket configurations in `deploy.rb`.
 
-    capify .
-    mkdir public
-    touch config/deploy.rb #see config instructions bellow
-    cap deploy
+    $ capify .
+    $ mkdir public
+    $ touch config/deploy.rb #see config instructions bellow
+    $ cap deploy
 
 ### Configuring deployment
 
