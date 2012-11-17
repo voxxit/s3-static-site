@@ -76,6 +76,7 @@ Capistrano::Configuration.instance(true).load do
                 :content_type => types[0]
               }
             end
+            options.merge!(bucket_write_options)
             _s3.buckets[bucket].objects[path].write(contents, options)
           end
         end
