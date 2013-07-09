@@ -12,6 +12,7 @@ Capistrano::Configuration.instance(true).load do
   end
   
   _cset :deployment_path, Dir.pwd.gsub("\n", "") + "/public"
+  _cset :deploy_to, ""
   
   def base_file_path(file)
     file.gsub(deployment_path, "")
@@ -76,7 +77,9 @@ Capistrano::Configuration.instance(true).load do
                 :content_type => types[0]
               }
             end
-            _s3.buckets[bucket].objects[path].write(contents, options)
+
+            target = deploy_to.empty? ? path : File.join(deploy_to, path)
+            _s3.buckets[bucket].objects[target].write(contents, options)
           end
         end
       end
