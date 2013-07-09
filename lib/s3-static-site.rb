@@ -77,7 +77,9 @@ Capistrano::Configuration.instance(true).load do
                 :content_type => types[0]
               }
             end
-            _s3.buckets[bucket].objects[File.join(deploy_to, path).gsub(/^\//)].write(contents, options)
+
+            target = deploy_to.empty? ? path : File.join(deploy_to, path)
+            _s3.buckets[bucket].objects[target].write(contents, options)
           end
         end
       end
