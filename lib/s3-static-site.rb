@@ -51,13 +51,17 @@ Capistrano::Configuration.instance(true).load do
             path = base_file_path(file)
             path.gsub!(/^\//, "") # Remove preceding slash for S3
 
+            types = MIME::Types.type_for(File.basename(file))
+
             contents = case File.extname(path)
             when ".haml"
+              types = MIME::Types['text/html']
               path.gsub!(".haml", "")
 
               engine = Haml::Engine.new(File.read(file))
               engine.render
             when ".sass"
+              types = MIME::Types['text/css']
               path.gsub!(".sass", "")
 
               engine = Sass::Engine.new(File.read(file))
@@ -66,7 +70,6 @@ Capistrano::Configuration.instance(true).load do
               open(file)
             end
 
-            types = MIME::Types.type_for(File.basename(file))
             if types.empty?
               options = {
                 :acl => :public_read
