@@ -66,6 +66,10 @@ Capistrano::Configuration.instance(true).load do
 
               engine = Sass::Engine.new(File.read(file))
               engine.render
+            when ".html"
+              types = MIME::Types['text/html']
+              path.gsub!(".html", "")
+              open(file)
             else
               open(file)
             end
