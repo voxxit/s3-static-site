@@ -11,6 +11,9 @@ Capistrano::Configuration.instance(true).load do
     set(name, *args, &block) if !exists?(name)
   end
   
+  _cset :aws_connect_options, {}
+  _cset :access_key_id, nil
+  _cset :secret_access_key, nil
   _cset :deployment_path, Dir.pwd.gsub("\n", "") + "/public"
   _cset :deploy_to, ""
   
@@ -24,13 +27,14 @@ Capistrano::Configuration.instance(true).load do
   
   # Establishes the connection to Amazon S3
   def establish_connection!
-    # Send logging to STDOUT
-    AWS.config(:logger => Logger.new(STDOUT))
+    options = {
+      :logger => Logger.new(STDOUT) # Send logging to STDOUT
+    }.merge(aws_connect_options)
+    options[:access_key_id] = access_key_id if access_key_id
+    options[:secret_access_key] = secret_access_key if secret_access_key
 
-    AWS::S3.new(
-      :access_key_id => access_key_id,
-      :secret_access_key => secret_access_key
-    )
+    AWS.config(options)
+    AWS::S3.new
   end
   
   # Deployment recipes

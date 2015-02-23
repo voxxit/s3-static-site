@@ -26,12 +26,14 @@ s3-static-site overrides the default Capistrano recipes for Rails projects with 
     require 's3-static-site'
 
     set :bucket, "www.cool-website-bucket.com"
-    set :access_key_id, "CHANGETHIS"
-    set :secret_access_key, "CHANGETHIS"
 
 If you want to deploy to multiple buckets, have a look at
 [Capistrano multistage](https://github.com/capistrano/capistrano/wiki/2.x-Multistage-Extension)
 and  configure a bucket per stage configuration.
+
+AWS credentials are read from the environment. See the [AWS-SDK
+documentation](http://docs.aws.amazon.com/AWSSdkDocsRuby/latest/DeveloperGuide/set-up-creds.html)
+for details.
 
 #### S3 write options
 
