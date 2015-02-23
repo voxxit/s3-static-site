@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
   gem.version       = "0.3.0"
 
   # Gem dependencies
-  gem.add_dependency("aws-sdk")
+  gem.add_dependency("aws-sdk", '~> 1.0', '>= 1.12.0')
   gem.add_dependency("capistrano")
   gem.add_dependency("haml")
   gem.add_dependency("mime-types")
